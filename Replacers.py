@@ -1,0 +1,28 @@
+"""
+此类用于替换单词（更正缩写形式）
+"""
+import re
+replacement_patterns=[
+(r'won\'t','will not'),
+(r'can\'t','can not'),
+(r'let\'s','let us'),
+(r'i\'m','I am'),
+(r'I\'m','i am'),
+(r'isn\'t','is not'),
+(r'(\w+)\'ll','\g<1> will'),
+(r'(\w+)n\'t','\g<1> not'),
+(r'(\w+)\'ve','\g<1> have'),
+(r'(\w+)\'s','\g<1> is'),
+(r'(\w+)\'re','\g<1> are'),
+(r'(\w+)\'d','\g<1> would')
+]
+class RegexpReplacer(object):
+	patterns = replacement_patterns
+	def __init__(self, patterns=replacement_patterns):
+		self.patterns =[(re.compile(regex), repl) for (regex, repl) in patterns]
+	def replace(self, text):
+		s=text
+		for(pattern ,repl) in self.patterns:
+			(s, count)=re.subn(pattern, repl, s)
+		return s
+
